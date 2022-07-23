@@ -28,8 +28,16 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((res, rej) => {
+    if (isPositiveAnswer === true) {
+      res('Hooray!!! She said "Yes"!');
+    }
+    if (isPositiveAnswer === false) {
+      res('Oh no, she said "No".');
+    }
+    rej(new Error('Wrong parameter is passed! Ask her again.'));
+  });
 }
 
 
@@ -48,8 +56,8 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array);
 }
 
 /**
@@ -71,8 +79,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -92,8 +100,10 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
+async function chainPromises(/* array, action */) {
   throw new Error('Not implemented');
+  // const output = array.reduce(await action);
+  // console.log(output)
 }
 
 module.exports = {
@@ -102,3 +112,10 @@ module.exports = {
   getFastestPromise,
   chainPromises,
 };
+
+
+// const lorem = 'Sed ut perspiciatis unde omnis iste';
+
+// const promises = lorem.split(' ').map((item) => new Promise((resolve) => resolve(item)));
+// // const result1 = chainPromises(promises, (a, b) => `${a} ${b}`);
+// const output = promises.forEach((a, b) => `${a} ${b}`);
