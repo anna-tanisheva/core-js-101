@@ -100,10 +100,17 @@ function getFastestPromise(array) {
  *    });
  *
  */
-async function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
-  // const output = array.reduce(await action);
-  // console.log(output)
+async function chainPromises(array, action) {
+  const output = [];
+  await array.map((item) => {
+    try {
+      item.then((value) => output.push(value));
+    } catch (error) {
+      console.log(error);
+    }
+    return item;
+  });
+  return output.reduce(action);
 }
 
 module.exports = {
@@ -117,5 +124,5 @@ module.exports = {
 // const lorem = 'Sed ut perspiciatis unde omnis iste';
 
 // const promises = lorem.split(' ').map((item) => new Promise((resolve) => resolve(item)));
-// // const result1 = chainPromises(promises, (a, b) => `${a} ${b}`);
+// const result1 = chainPromises(promises, (a, b) => `${a} ${b}`);
 // const output = promises.forEach((a, b) => `${a} ${b}`);
