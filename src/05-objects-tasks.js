@@ -119,36 +119,48 @@ const cssSelectorBuilder = {
 
   element(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(1);
+    innerObj.errId = 1;
     innerObj.output = `${this.output}${value}`;
     return innerObj;
   },
 
   id(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(2);
+    innerObj.errId = 2;
     innerObj.output = `${this.output}#${value}`;
     return innerObj;
   },
 
   class(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(3);
+    innerObj.errId = 3;
     innerObj.output = `${this.output}.${value}`;
     return innerObj;
   },
 
   attr(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(4);
+    innerObj.errId = 4;
     innerObj.output = `${this.output}[${value}]`;
     return innerObj;
   },
 
   pseudoClass(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(5);
+    innerObj.errId = 5;
     innerObj.output = `${this.output}:${value}`;
     return innerObj;
   },
 
   pseudoElement(value) {
     const innerObj = Object.create(cssSelectorBuilder);
+    this.error(6);
+    innerObj.errId = 6;
     innerObj.output = `${this.output}::${value}`;
     return innerObj;
   },
@@ -161,6 +173,15 @@ const cssSelectorBuilder = {
     const innerObj = Object.create(cssSelectorBuilder);
     innerObj.output = `${selector1.output} ${combinator} ${selector2.output}`;
     return innerObj;
+  },
+
+  error(errId) {
+    if (this.errId > errId) {
+      throw new Error('Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element');
+    }
+    if (this.errId === errId && (errId === 1 || errId === 2 || errId === 6)) {
+      throw new Error('Element, id and pseudo-element should not occur more then one time inside the selector');
+    }
   },
 };
 

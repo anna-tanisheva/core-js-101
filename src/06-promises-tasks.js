@@ -119,10 +119,3 @@ module.exports = {
   getFastestPromise,
   chainPromises,
 };
-
-
-// const lorem = 'Sed ut perspiciatis unde omnis iste';
-
-// const promises = lorem.split(' ').map((item) => new Promise((resolve) => resolve(item)));
-// const result1 = chainPromises(promises, (a, b) => `${a} ${b}`);
-// const output = promises.forEach((a, b) => `${a} ${b}`);
