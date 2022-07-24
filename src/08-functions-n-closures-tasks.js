@@ -45,7 +45,7 @@ function getComposition(/* f, g */) {
  *
  */
 function getPowerFunction(exponent) {
-  return function (num) {
+  return function power(num) {
     return num ** exponent;
   };
 }
@@ -95,8 +95,15 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let cache = func();
+  return () => {
+    if (cache) {
+      return cache;
+    }
+    cache = func();
+    return cache;
+  };
 }
 
 
@@ -115,8 +122,17 @@ function memoize(/* func */) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  try {
+    func();
+  } catch (err) {
+    // console.log(counter);
+    let counter = attempts;
+    while (counter >= 0) {
+      func();
+      counter -= 1;
+    }
+  }
 }
 
 
@@ -143,11 +159,12 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(func, logFunc) {
-  console.log(`${func} starts`);
-  func();
-  console.log(`${func} ends`);
-  console.log(logFunc);
+function logger(/* func, logFunc */) {
+  // console.log(`${func} starts`);
+  // func();
+  // console.log(`${func} ends`);
+  // console.log(logFunc);
+  throw new Error('Not implemented');
 }
 
 /**
@@ -164,7 +181,7 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn, ...args1) {
-  return function (...args) {
+  return function partial(...args) {
     return fn(...args1, ...args);
   };
 }
@@ -189,7 +206,7 @@ function partialUsingArguments(fn, ...args1) {
  */
 function getIdGeneratorFunction(startFrom) {
   let id = startFrom;
-  return function () {
+  return function newId() {
     const temp = id;
     id += 1;
     return temp;

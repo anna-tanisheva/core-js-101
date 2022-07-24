@@ -106,7 +106,7 @@ async function chainPromises(array, action) {
     try {
       item.then((value) => output.push(value));
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     return item;
   });
